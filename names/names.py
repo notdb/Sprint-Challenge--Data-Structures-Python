@@ -1,7 +1,7 @@
 import time
 import sys
 from binary_search_tree import BinarySearchTree
-sys.setrecursionlimit(10000)
+sys.setrecursionlimit(10001)
 start_time = time.time()
 
 f = open('names_1.txt', 'r')
@@ -24,16 +24,17 @@ duplicates = []
 # if yes, add name to thingy.
 # this won't work because there are allegedly a lot of names with the exact same length
 
-bigTree = BinarySearchTree(15)
-
+bigTree = BinarySearchTree(1)
+#for i in range(0,10000):
+#    bigTree.insert(i)
 for name_1 in names_1:
-    hashedName = len(name_1)*5
-    bigTree.insert(hashedName)
+     hashedName = (len(name_1), name_1)
+     bigTree.insert(hashedName)
 for name_2 in names_2:
-    hashedName = len(name_2)*5
-    if bigTree.contains(hashedName):
+    hashedName = (len(name_2), name_2)
+    if bigTree.contains(hashedName[1]):
        duplicates.append(name_2)
-
+     
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
 print (f"runtime: {end_time - start_time} seconds")
