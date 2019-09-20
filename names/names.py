@@ -1,5 +1,7 @@
 import time
-
+import sys
+from binary_search_tree import BinarySearchTree
+sys.setrecursionlimit(10000)
 start_time = time.time()
 
 f = open('names_1.txt', 'r')
@@ -11,10 +13,26 @@ names_2 = f.read().split("\n")  # List containing 10000 names
 f.close()
 
 duplicates = []
+#for name_1 in names_1:
+#    for name_2 in names_2:
+#        if name_1 == name_2:
+#            duplicates.append(name_1)
+# so my binary search tree only can compare ints (numbers). What we can do is take the list of names, and turn them into a list of numbers (hash it), and then insert them into my tree. Take the second list of names, hash them the same way, and compare the tree. using contains
+
+# so name.length x 2, insert that
+# compare, name2.length x 2
+# if yes, add name to thingy.
+# this won't work because there are allegedly a lot of names with the exact same length
+
+bigTree = BinarySearchTree(15)
+
 for name_1 in names_1:
-    for name_2 in names_2:
-        if name_1 == name_2:
-            duplicates.append(name_1)
+    hashedName = len(name_1)*5
+    bigTree.insert(hashedName)
+for name_2 in names_2:
+    hashedName = len(name_2)*5
+    if bigTree.contains(hashedName):
+       duplicates.append(name_2)
 
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
