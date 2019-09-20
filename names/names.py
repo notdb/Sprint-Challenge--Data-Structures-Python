@@ -1,5 +1,6 @@
 import time
 import sys
+import hashlib
 from binary_search_tree import BinarySearchTree
 sys.setrecursionlimit(10001)
 start_time = time.time()
@@ -24,18 +25,26 @@ duplicates = []
 # if yes, add name to thingy.
 # this won't work because there are allegedly a lot of names with the exact same length
 
-bigTree = BinarySearchTree(1)
-#for i in range(0,10000):
-#    bigTree.insert(i)
+# it's hard to use a binary search tree for this because ideally we'd have unique keys to compare, unless you want to create a binary search tree of 10000 from 1-10000 and compare every single node when we run through it
+
+# the problem is the names aren't all different lengths. So you can have two names: John and Nohj and they're both the same length of 4 despite being different.
+
+# so we can't turn the names into numbers and then insert them all into the binary tree, and search the tree for a specific number and add the name to the list if it returns true
+i = 1
+bigTree = BinarySearchTree((0,'f'))
 for name_1 in names_1:
-     hashedName = (len(name_1), name_1)
+     hashedName = ((i, name_1))
+     i+= 1
      bigTree.insert(hashedName)
+b = 1
 for name_2 in names_2:
-    hashedName = (len(name_2), name_2)
-    if bigTree.contains(hashedName[1]):
-       duplicates.append(name_2)
-     
+    hashedName = ((b, name_2))
+    b+= 1
+    if bigTree.contains(hashedName[0]):
+       duplicates.append('true')
+
 end_time = time.time()
+print(len(duplicates))
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
 print (f"runtime: {end_time - start_time} seconds")
 
